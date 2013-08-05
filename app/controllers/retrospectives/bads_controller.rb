@@ -24,8 +24,9 @@ class Retrospectives::BadsController < ApplicationController
     good = Good.new
     good.retrospective_id = params[:retrospective_id]
     good.description = "Corrigido: #{bad.description}!"
-    good.save
+    good.votes = bad.votes
     bad.destroy
+    raise RuntimeError, "Erro ao mover post-it" unless good.save
     redirect_to retrospective_path(params[:retrospective_id])
   end
 

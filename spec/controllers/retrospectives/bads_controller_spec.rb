@@ -5,6 +5,44 @@ describe Retrospectives::BadsController do
 
   before { controller.session[:user_id] = FactoryGirl.create(:user).id }
 
+  describe "#to_good" do
+    subject { get :to_good, retrospective_id: params_stub[:retrospective_id], id: params_stub[:id] }
+
+
+    context 'success' do
+      let(:params_stub) { { :id => 123, :retrospective_id => 456 } }
+      let(:bad)   { FactoryGirl.create(:bad, id: params_stub[:id], retrospective_id: params_stub[:retrospective_id]) }
+    #  let(:good)  { FactoryGirl.build(:good) }
+
+
+      before do
+        Retrospectives::BadsController.stub(:params).and_return(params_stub)
+#        Good.stub(:new).and_return(good)
+      end
+
+    it 'aew' do
+      require 'pry'; binding.pry
+    end
+
+      it 'retrospective id should be equal from the bad' do
+
+        good.retrospective_id.shoud eql bad.retrospective_id
+        subject
+      end
+    end
+  end
+
+  #def to_good
+  #  bad = Bad.find(params[:id])
+  #  good = Good.new
+  #  good.retrospective_id = params[:retrospective_id]
+  #  good.description = "Corrigido: #{bad.description}!"
+  #  good.votes = bad.votes
+  #  bad.destroy
+  #  raise RuntimeError, "Erro ao mover post-it" unless good.save
+  #  redirect_to retrospective_path(params[:retrospective_id])
+  #end
+
   describe "GET keep" do
     subject { get :keep, retrospective_id: params_stub[:retrospective_id], id: params_stub[:id] }
 
